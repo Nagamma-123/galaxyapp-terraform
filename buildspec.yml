@@ -1,0 +1,28 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 18
+    commands:
+      - echo Installing dependencies...
+      - npm install  # use 'npm install' if package-lock.json isn't present
+
+  build:
+    commands:
+      - echo Running Vite build...
+      - npm run build  # assumes "build" script exists in package.json
+
+  post_build:
+    commands:
+      - echo Deploying to S3...
+      - aws s3 sync dist/ s3://$bucket_name --delete --cache-control "max-age=31536000, public"
+      - echo Purging Fastly cache...
+      - |
+        curl -X POST "https://api.fastly.com/service/$FASTLY_SERVICE_ID/purge_all" \
+        -H "Fastly-Key: $FASTLY_API_KEY" \
+        -H "Accept: application/json"
+
+artifacts:
+  files:
+    - '**/*'
