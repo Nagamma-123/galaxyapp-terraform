@@ -37,7 +37,7 @@ resource "aws_codebuild_project" "build_static_site" {
 
     environment_variable {
       name  = "FASTLY_API_KEY"
-      value = var.fastly_api_key_secret
+      value = var.fastly_api_key_secret # data_aws_secret manager recomended.
     }
   }
 
