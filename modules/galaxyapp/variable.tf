@@ -1,0 +1,10 @@
+variable "project_name" {}
+variable "region" {}
+variable "bucket_name" {}
+variable "domain_name" {}
+variable "route53_zone_id" {}
+variable "github_repo" {}
+variable "github_branch" {}
+variable "codestar_connection_arn" {}
+variable "fastly_service_id" {}
+variable "fastly_api_key_secret" {}
